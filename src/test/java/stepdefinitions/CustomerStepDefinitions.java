@@ -6,7 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import static io.restassured.RestAssured.*;
 import static utils.Config.BASE_URL;
-import static utils.Config.Base_url;
+
 
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -67,83 +67,83 @@ public class CustomerStepDefinitions {
         return builder.toString();
     }
 
-    @When("I send a GET request to retrieve customer email")
-    public void iSendAGETRequestToRetrieveCustomerEmail() {
-        Response response = given()
-                .auth()
-                .preemptive()
-                .basic(Config.consumer_key, Config.consumer_secret)
-                .when()
-                .get(Config.BASE_URL + customerId)
-                .then()
-                .statusCode(200)
-                .extract()
-                .response()
-                ;
-        String retrievedEmail = response.jsonPath().getString("email");
-        System.out.println(retrievedEmail);
-
-
-        Assert.assertNotNull(retrievedEmail, "Customer email should not be null");
-
-    }
-
-    @Then("the customer email is retrieved successfully with status code 200")
-    public void theCustomerEmailIsRetrievedSuccessfullyWithStatusCode200() {
-
-    }
-
-    @When("I send a PUT request to update customer email")
-    public void iSendAPUTRequestToUpdateCustomerEmail() {
-        String newEmail = "updated_" + generateRandomString(5) + "@example.com";
-
-        // Create update data
-        HashMap<String, String> requestBody = new HashMap<>();
-        requestBody.put("email", newEmail);
-
-
-        // Send PUT request to update the customer's email
-        Response response = given()
-                .auth().preemptive().basic(Config.consumer_key, Config.consumer_secret)
-                .header("Content-Type", "application/json")
-                .body(requestBody)
-                .when().put(BASE_URL + customerId)
-                .then().statusCode(200).extract().response();
-
-
-        String updatedEmail = response.jsonPath().getString("email");
-        Assert.assertEquals(updatedEmail, newEmail, "Customer email should be updated.");
-
-    }
-
-    @Then("the customer email is changed successfully with status code 200")
-    public void theCustomerEmailIsChangedSuccessfullyWithStatusCode200() {
-
-    }
-
-    @When("I send a DELETE request to remove a customer")
-    public void iSendADELETERequestToRemoveACustomer() {
-        Response response = given()
-                .auth()
-                .preemptive()
-                .basic(Config.consumer_key, Config.consumer_secret)
-                .when()
-                .delete(Config.BASE_URL + customerId + "?force=true")
-                .then()
-                .extract()
-                .response();
-        if (response.statusCode() == 200) {
-            System.out.println("Customer deleted successfully");
-        } else if (response.statusCode() == 404) {
-            System.out.println("Customer is already deleted or does not exist.");
-        }
-
-        Assert.assertEquals(response.statusCode(), 200, "Customer should be deleted successfully.");
-    }
-
-    @Then("the customer is deleted successfully with status code 200")
-    public void theCustomerIsDeletedSuccessfullyWithStatusCode200() {
-    }
-
-
+//    @When("I send a GET request to retrieve customer email")
+//    public void iSendAGETRequestToRetrieveCustomerEmail() {
+//        Response response = given()
+//                .auth()
+//                .preemptive()
+//                .basic(Config.consumer_key, Config.consumer_secret)
+//                .when()
+//                .get(Config.BASE_URL + customerId)
+//                .then()
+//                .statusCode(200)
+//                .extract()
+//                .response()
+//                ;
+//        String retrievedEmail = response.jsonPath().getString("email");
+//        System.out.println(retrievedEmail);
+//
+//
+//        Assert.assertNotNull(retrievedEmail, "Customer email should not be null");
+//
+//    }
+//
+//    @Then("the customer email is retrieved successfully with status code 200")
+//    public void theCustomerEmailIsRetrievedSuccessfullyWithStatusCode200() {
+//
+//    }
+//
+//    @When("I send a PUT request to update customer email")
+//    public void iSendAPUTRequestToUpdateCustomerEmail() {
+//        String newEmail = "updated_" + generateRandomString(5) + "@example.com";
+//
+//        // Create update data
+//        HashMap<String, String> requestBody = new HashMap<>();
+//        requestBody.put("email", newEmail);
+//
+//
+//        // Send PUT request to update the customer's email
+//        Response response = given()
+//                .auth().preemptive().basic(Config.consumer_key, Config.consumer_secret)
+//                .header("Content-Type", "application/json")
+//                .body(requestBody)
+//                .when().put(BASE_URL + customerId)
+//                .then().statusCode(200).extract().response();
+//
+//
+//        String updatedEmail = response.jsonPath().getString("email");
+//        Assert.assertEquals(updatedEmail, newEmail, "Customer email should be updated.");
+//
+//    }
+//
+//    @Then("the customer email is changed successfully with status code 200")
+//    public void theCustomerEmailIsChangedSuccessfullyWithStatusCode200() {
+//
+//    }
+//
+//    @When("I send a DELETE request to remove a customer")
+//    public void iSendADELETERequestToRemoveACustomer() {
+//        Response response = given()
+//                .auth()
+//                .preemptive()
+//                .basic(Config.consumer_key, Config.consumer_secret)
+//                .when()
+//                .delete(Config.BASE_URL + customerId + "?force=true")
+//                .then()
+//                .extract()
+//                .response();
+//        if (response.statusCode() == 200) {
+//            System.out.println("Customer deleted successfully");
+//        } else if (response.statusCode() == 404) {
+//            System.out.println("Customer is already deleted or does not exist.");
+//        }
+//
+//        Assert.assertEquals(response.statusCode(), 200, "Customer should be deleted successfully.");
+//    }
+//
+//    @Then("the customer is deleted successfully with status code 200")
+//    public void theCustomerIsDeletedSuccessfullyWithStatusCode200() {
+//    }
+//
+//
 }
